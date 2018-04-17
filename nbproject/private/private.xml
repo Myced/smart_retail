@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/opt/lampp/htdocs/smart/admin/keys.txt</file>
+            <file>file:/opt/lampp/htdocs/smart/home.php</file>
+            <file>file:/opt/lampp/htdocs/smart/api/search_product.php</file>
+            <file>file:/opt/lampp/htdocs/smart/gen_key.php</file>
+            <file>file:/opt/lampp/htdocs/smart/return_inventory.php</file>
+            <file>file:/opt/lampp/htdocs/smart/includes/header.php</file>
+            <file>file:/opt/lampp/htdocs/smart/product_units.php</file>
+            <file>file:/opt/lampp/htdocs/smart/issue_inventory.php</file>
+            <file>file:/opt/lampp/htdocs/smart/api/search_customer.php</file>
+            <file>file:/opt/lampp/htdocs/smart/stock_count_control.php</file>
+            <file>file:/opt/lampp/htdocs/smart/return_products.php</file>
+            <file>file:/opt/lampp/htdocs/smart/stock_update.php</file>
+        </group>
+    </open-files>
+</project-private>

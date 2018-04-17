@@ -1,0 +1,302 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 12, 2018, 2:59:10 AM
+    Author     : tnced
+*/
+
+body
+{
+    background-color:   #64a7ee;
+    width:      100%;
+    font-size:  16px;
+    font-family: serif;
+}
+
+.main
+{
+    width: 1200px;
+    margin-left: 0px;
+    float: left;
+}
+
+.main .sidebar
+{
+    width: 250px;
+    float: left;
+    height: 100%;
+}
+
+.main .main-content
+{
+    width: 900px;
+    float: left;
+}
+
+.sidebar .content
+{
+    margin: 0px;
+    width: 100%;
+}
+
+.name
+{
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    background-color: #ccc;
+    margin: -15px -15px 45px -15px;
+    padding: 10px;
+    padding-bottom: 35px;
+    padding-top: 25px;
+    font-family: serif;
+}
+
+
+.sidebar ul
+{
+    margin: 0px -15px 0px -15px;
+    list-style-type: none;
+}
+
+.sidebar ul li
+{
+    
+    margin-bottom: 15px;
+    margin-left: -40px;
+}
+
+.sidebar ul li a
+{
+    display: inline-block;
+    padding-top:12px;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    font-size: 1.2em;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+        touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    color: black;
+    display: block;
+    width: 100%;
+    font-family: serif;
+    background-color: #ccc;  
+    background-image: linear-gradient(to left,
+        transparent,
+        transparent 50%,
+        #da07d7 50%,
+        #da07d7);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .5s ease-in;
+    transition: all .5s ease-in;
+    
+}
+
+.sidebar ul li a:hover
+{
+    background-position: 0 0;
+    color: #333;
+}
+
+.header-content
+{
+    margin-left: 50px;
+    background-color: #ccc;
+}
+
+.header-content .main-header
+{
+    font-size: 2em;
+    font-weight: bold;
+    background-color: #ccc;
+    margin-right: 50px;
+    display: inline;
+    width: 65%;
+    font-style: italic;
+}
+
+.logo
+{
+    width: 30%;
+    display: inline;
+    float: right;
+}
+
+.logo .image-box img
+{
+    width: 60px;
+    height: 60px;
+    border: 2px solid #9bbcf2;
+    border-radius: 50px;
+    float: right;
+}
+
+.header-content::after
+{
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.page-heading
+{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.table-links
+{
+    width: 100%;
+    font-size: 1em;
+    background-color: #ccc;
+}
+
+.table-links th, .table-links td
+{
+    padding: 5px;
+}
+
+.table-links th
+{
+    font-size: 1.8em;
+    font-style: italic;
+}
+
+.table-links td
+{
+    width: 25%;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    
+}
+
+.table-links td a
+{
+    color: #111;
+}
+
+.myContent
+{
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+h1, h2, h3, h4, h5 {font-family: serif; font-weight: bold;}
+
+.letter_head_logo
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid #9bbcf2;
+}
+
+.letter_head_heading
+{
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.white-background
+{
+    background-color: #fff;
+}
+
+.sublink
+{
+    display: block;
+    padding: 5px;
+    background-color: #207ff2;
+    color: black;
+    text-align: center;
+    transition: 1s;
+}
+
+.sublink:hover
+{
+    font-size: 1.1em;
+    font-weight: bold;
+    color: black;
+    /*background-color: #64a7ee;*/
+    background-color: #9ec8f0;
+    padding-top: 5px;
+}
+
+.sublink_active
+{
+    background-color: #64a7ee;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-top: 5px solid #207ff2;
+    border-left: 2px solid #207ff2;
+    border-right: 2px solid #207ff2;
+    padding-top: 0px;
+}
+
+.sublink_td
+{
+    margin: 0px;
+    border: 2px solid gray;
+    background-color: #da07d7;
+    transition: 1s;
+    
+}
+
+.sublink_td:hover
+{
+    background-color: #fff;
+    font-size: 1.2em;
+}
+
+
+
+.sidebar-active
+{
+    border-left: 5px solid #da07d7;
+    border-top: 4px solid #da07d7;
+    background-image: linear-gradient(#da07d7, #fff);
+}
+
+.rotateItem
+{
+    transform: rotate(180deg);
+    transition: transform 1s 1s ease-in;
+}
+
+.rotateItem:hover
+{
+    transform: rotate(360deg);
+}
+
+.heading
+{
+    font-weight: bold;
+    font-size: 1.8em;
+    font-style: italic;
+    padding-left: 3%;
+}
+
+.link-btn
+{
+    border: none;
+}
+
+.my_submenu
+{
+    margin-left: 5%;
+    width: 100%;
+}
+

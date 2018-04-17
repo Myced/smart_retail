@@ -1,0 +1,171 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 22, 2018, 6:46:40 AM
+    Author     : tnced
+*/
+
+body
+{
+    font-size: 16px;
+    font-family: serif;
+    width: 100%;
+}
+
+.container
+{
+    width: 900px;
+    margin:  auto;
+}
+
+.row
+{
+    width: 100%;
+}
+
+.head
+{
+    text-align: center;
+}
+
+.head::after
+{
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.logo
+{
+    width: 20%;
+    float: left;
+    
+}
+
+.image
+{
+    
+    width: 100px;
+    height: 100px;
+    border: 2px solid #9bbcf2;
+    border-radius: 50px;
+    margin-left: 15px;
+}
+
+.other
+{
+    width: 78%;
+    float: left;
+    padding-bottom: 20px;
+}
+
+.company
+{
+    font-size: 2em;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.info
+{
+    display:  inline;
+    padding-top: 10px;
+    width: 30%;
+    
+    padding-left: 30px;
+}
+
+.document_title
+{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.document_data
+{
+    padding: 5px;
+}
+
+.information::after
+{
+    content: '';
+    display: block;
+    clear: both;
+    margin-bottom: 20px;
+}
+
+.set1
+{
+    width: 40%;
+    float: left;
+    margin-left: 20px;
+    margin: 1px solid blue;
+}
+
+.set2
+{
+    width: 40%;
+    float: left;
+    margin-left: 70px;
+}
+
+.sales_agent
+{
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+.date
+{
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+@media print {
+  div.divFooter {
+    position: fixed;
+    bottom: 0;
+    margin-right: 0px;
+  }
+}
+
+div.divFooter {
+    position: fixed;
+    bottom: 0;
+    margin-right: 0;
+}
+
+.reference
+{
+    padding: 10px;
+    margin-left: 70%;
+}
+
+.ref
+{
+    padding: 10px 20px;
+    background-color: #aaa;
+}
+
+.signature
+{
+    margin-left: 70%;
+    margin-top: 50px;
+    border-bottom: 2px solid #333;
+}
+
+.signature_line
+{
+    width: 50%;
+    border-bottom: 2px solid #333;
+}
+
