@@ -518,9 +518,7 @@ if(isset($print_receipt) && $print_receipt == TRUE)
             else {
                 //get the unit price
                 var unit_price = $row.find("input[name='unit_price[]']").val();
-
                 var total  = unit_price * quantity;
-
                 $row.find("input[name='total[]']").val(total);
 
                 update_final_total();
