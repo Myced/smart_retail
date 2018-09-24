@@ -17,13 +17,13 @@ require_once './get_product_quantity.php';
 function gen_sales_ref()
 {
     global $dbc;
-    
+
     $query = "SELECT `id` FROM `sales_ref` ORDER BY `id` DESC LIMIT 1";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
+
     $constant = '';
-    
+
     if(mysqli_num_rows($result)== 0)
     {
         $value = '00001';
@@ -32,11 +32,11 @@ function gen_sales_ref()
     {
         //grab the value of the id
         list($last_idd) = mysqli_fetch_array($result);
-        
+
         $last_id = (int) $last_idd;
-        
+
         $last_id++;
-        
+
         if($last_id < 10)
         {
             $value = '0000' . $last_id;
@@ -58,7 +58,7 @@ function gen_sales_ref()
             $value = $last_id;
         }
     }
-    
+
     return $constant . $value;
 }
 
@@ -69,11 +69,11 @@ if(isset($_POST['submit']))
     //grab all the data
     $ref = filter($_POST['ref']);
     $date = filter($_POST['date']);
-    
+
     $agent = filter($_POST['agent']);
     $stock = filter($_POST['stock']);
-    
-    
+
+
     $tax = filter($_POST['tax']);
     $discount = filter($_POST['discount']);
 
@@ -90,18 +90,18 @@ if(isset($_POST['submit']))
     for($i = 0; $i < $number; $i++)
     {
         $index = $product_name[0][$i];
-        
+
         if(!empty($index))
         {
             $items++;
         }
     }
-    
+
     if($items == 0)
     {
         $warning = "Sale Was not made. You did not enter any items";
     }
-    
+
     else
     {
         $final_total = 0;
@@ -113,17 +113,17 @@ if(isset($_POST['submit']))
             if(!empty($index))
             {
                 $item_sold++;
-                
-                
-                //grab all the values. 
+
+
+                //grab all the values.
                 $mtotal = get_money(filter($total[0][$i]));
                 $mcode  = filter($product_code[0][$i]);
                 $mname = filter($product_name[0][$i]);
                 $mquantity = filter($quantity[0][$i]);
-                $mprice = filter($unit_price[$i]); 
-                
+                $mprice = filter($unit_price[$i]);
+
                 $final_total = ($mtotal) + $final_total;
-                
+
                 //insert into the database;
                 $query  = "INSERT INTO `sales` ("
                         . " `id`, `ref`, `date`, `product_code`, `product_name`, "
@@ -136,29 +136,29 @@ if(isset($_POST['submit']))
                         . " '$month', '$year', NOW(), '$user_id')";
                 $result = mysqli_query($dbc, $query)
                         or die("Error");
-                
-                
+
+
                 //get the product quantity;
                 $qq = get_quantity($mcode); //current quantity in the database;
-                
-                //final quantity 
+
+                //final quantity
                 $fquantity = (int)$qq - (int)$mquantity;
-                
+
                 //move inventory here
-                $comment = "Sales to " . $agent . " <br> With Receipt No " . $ref; 
-                
+                $comment = "Sales to " . $agent . " <br> With Receipt No " . $ref;
+
                 //now move the inventory
                 move_inventory($mcode, $qq, $fquantity, $comment);
-                
+
                 //now reduce the product quantity
                 $query = "UPDATE `products` SET "
                         . " `quantity` = '$fquantity'"
                         . " WHERE `product_code` = '$mcode'";
                 $result = mysqli_query($dbc, $query)
                         or die("Error");
-                
-                
-                
+
+
+
             }
         }
         //now insert into sales referece table
@@ -173,15 +173,15 @@ if(isset($_POST['submit']))
                 . " '$month', '$year', NOW(), '$user_id')";
         $result = mysqli_query($dbc, $query)
                 or die("Error");
-        
+
         $sale = $ref;
-        
+
         $success = "Products Sold. ";
         $print_receipt = TRUE;
     }
 
-    
-    
+
+
 }
 
 $sales_ref = gen_sales_ref();
@@ -210,24 +210,24 @@ require_once './includes/heading.php';
 
     <?php
     require_once './includes/notifications.php';
-    
+
     if(isset($print_receipt) && $print_receipt == TRUE)
     {
         ?>
     <div class="row text-center">
-        <button class="btn btn-success" 
+        <button class="btn btn-success"
                 onclick="window.open('receipt.php?ref=<?php echo $sale; ?>', '', 'width=800,height=400')">
             <i class="fa fa-print"></i>
             Print Receipt
         </button>
-        
+
     </div>
     <br>
         <?PHP
     }
     ?>
-    
-    
+
+
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 
@@ -236,7 +236,7 @@ require_once './includes/heading.php';
                         <label for="exampleInputEmail1" style='font-weight:normal; margin-right: 50px;'>Ref </label>
                     </td>
                     <td>
-                        <input type="text" class="form-control" name='ref' style='width:180px; margin-right: 50px;' 
+                        <input type="text" class="form-control" name='ref' style='width:180px; margin-right: 50px;'
                                required="" value="<?php echo $sales_ref; ?>" readonly="true"></td>
                     <td>
                         <label for="exampleInputEmail1" style='font-weight:normal; margin-left: 50px;'>Date</label>
@@ -268,13 +268,13 @@ require_once './includes/heading.php';
                                color: black;
                                font-weight: bold;
                                padding-bottom: 2px;
-                               " placeholder="Enter Name" required="true" id="client" autocomplete="false">
+                               " placeholder="Enter Name" required="true" id="client" autocomplete="off">
             </div>
         </div>
 
 
         <div class="col-md-6">
-            
+
             <label class="col-md-6 text-right">
                 Available stock
             </label>
@@ -320,11 +320,11 @@ require_once './includes/heading.php';
                         <?php
                    }
                    ?>
-                    
+
                 </table>
             </div>
         </div>
-   
+
    </div>
  </div>
 
@@ -407,7 +407,7 @@ if(isset($print_receipt) && $print_receipt == TRUE)
             }
         });
     });
-    
+
     $(document).ready(function(){
         $(".product_name").typeahead({
             source: function(key, result){
@@ -417,7 +417,6 @@ if(isset($print_receipt) && $print_receipt == TRUE)
                     data: {key:key},
                     dataType: "json",
                     success: function(data){
-                        
                         result($.map(data, function(item){
                             return item;
                         }));
@@ -425,7 +424,7 @@ if(isset($print_receipt) && $print_receipt == TRUE)
                 });
             }
         });
-        
+
         $("#client").typeahead({
             source: function(key, result){
                 $.ajax({
@@ -434,7 +433,7 @@ if(isset($print_receipt) && $print_receipt == TRUE)
                     data: {key:key},
                     dataType: "json",
                     success: function(data){
-                        
+                        console.log(data);
                         result($.map(data, function(item){
                             return item;
                         }));
@@ -442,16 +441,16 @@ if(isset($print_receipt) && $print_receipt == TRUE)
                 });
             }
         });
-        
+
         $(".product_name").focusout(function(){
-            
+
             $product_exist = true;
-            
+
             var product_name = $(this).val();
             var index = $(this).closest("tr").index();
             var $row = $("#tb tr:eq(" + index + ")");
             //now grab the index of that row.
-            
+
             if(product_name != '')
             {
                 $.ajax({
@@ -500,41 +499,41 @@ if(isset($print_receipt) && $print_receipt == TRUE)
                }
            }//end of if the product name is empty.
             }); //end of focus out for the product name
-            
-        
+
+
         $(".quantity").focusout(function(){
             var quantity = $(this).val();
             var index = $(this).closest("tr").index();
             var $row = $("#tb tr:eq(" + index + ")");
-            
+
             //get the unit price
             var unit_price = $row.find("input[name='unit_price[]']").val();
-            
+
             var total  = unit_price * quantity;
-            
+
             $row.find("input[name='total[]']").val(total);
-            
+
             update_final_total();
         });
-        
+
         function update_final_total()
         {
             var total = 0;
-            
+
             $(".total").each(function(){
                 var value = $(this).val();
-                
+
                 if(value != '')
                 {
                     var int_value = parseInt(value);
-  
+
                     total = total + int_value;
                 }
-                    
-                
+
+
 
             });
-            
+
             var final = total + " FCFA";
             $("#final_total").val(final);
         }
