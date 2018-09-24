@@ -11,7 +11,7 @@ $ref = filter($_GET['ref']);
 <html>
     <head>
         <title>
-            Returned Inventory
+            Receipt
         </title>
         
         <link rel="stylesheet" href="css/AdminLTE.css">

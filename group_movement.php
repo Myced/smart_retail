@@ -117,26 +117,25 @@ require_once './includes/heading.php';
             </div>
 
             <div class="col-md-3">
-                <select name="year" class="form-control" required="true" >
-                    <option value="--">
-                         -- SELECT YEAR --
-                    </option>
-
-                    <?php
-                    $query = "SELECT * FROM `sales` GROUP BY `year`";
-                    $result = mysqli_query($dbc, $query)
-                            or die("Error. Could not get products");
-                    while($row = mysqli_fetch_array($result))
-                    {
-                        //echo them out.
-                        ?>
-                    <option value="<?php echo $row['year']; ?>">
-                        <?php echo $row['year']; ?>
-                    </option>
+                <select name="year" class="form-control" required="true">
+                        <option value="--">
+                             -- SELECT YEAR --
+                        </option>
+                        
                         <?php
-                    }
-                    ?>
-                </select>
+			$start = 2018;
+			$end = date("Y"); // could be any year. Even 2029
+                        for($i = $start; $i <= $end; $i++)
+                        {
+                            //echo them out.
+                            ?>
+                        <option value="<?php echo $i; ?>">
+                            <?php echo $i; ?>
+                        </option>
+                            <?php
+                        }
+                        ?>
+                    </select>
             </div>
 
             <div class="col-md-3">

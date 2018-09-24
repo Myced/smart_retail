@@ -1,0 +1,9 @@
+1. Add importing inventory from excel file
+2. Add discount part for selling.
+3. Add small receipt.
+4. Add barcode sales system.
+5. Should not be able to sell when the number of products entered is greater
+		than the products available in stock.
+6. Adjust the header of the receipt
+7. Add section for graphs.
+8. Check out how to run script on an installer

@@ -1,18 +1,18 @@
 <div class="row">
         <div class="col-md-12">
-            <?php 
+            <?php
             $link = $db->connect();
-            
+
             $query = "SELECT * FROM `company` ORDER BY `id` DESC LIMIT 1";
             $res = mysqli_query($link, $query);
-            
+
             while ($r = mysqli_fetch_array($res))
             {
                 ?>
-            <div class="col-md-3">
+            <div class="col-md-2 col-md-offset-1">
                 <?php
                 $photo = $r['photo'];
-                
+
                 if(!empty($photo) && file_exists($photo))
                 {
                     ?>
@@ -35,13 +35,13 @@
                 }
                 ?>
             </div>
-            
+
             <div class="col-md-8">
                 <div class="text-center">
                     <div class="row letter_head_heading">
                         <?php echo $r['company_name']; ?>
                     </div>
-                    
+
                     <div class="row header_content">
                         <div class="row">
                             <div class="col-md-3">

@@ -13,7 +13,7 @@ function update_product_trial()
 {
     global $dbc; //database connection
     global $one_day; // the value of a day
-    
+
     //check if the product has started with the trial.
     $query = "SELECT * FROM `trial` ORDER BY `id` DESC"
             . " LIMIT 1";
@@ -27,7 +27,7 @@ function update_product_trial()
             $key_id = $row['id'];
             $end_date_time = $row['end_date_time'];
         }
-        
+
         //calculate the number of days left.
         $now = date('m/d/Y H:i:s');
 
@@ -37,7 +37,7 @@ function update_product_trial()
 
 
         $diff =  $end_date_time_string - $now_string;
-        
+
         if($diff <= 0)
         {
             //it means the key has expired.
@@ -56,7 +56,7 @@ function update_product_trial()
             $result = mysqli_query($dbc, $query)
                     or die("Error");
         }
-        
+
     }
 }
 
@@ -65,15 +65,15 @@ function update_licence_key()
     //first check if a product key has been inserted.
     global $dbc; //database connection
     global $one_day; // the value of a day
-    
+
     $query = "SELECT * FROM `activation` "
             . "     ORDER BY `id` DESC  LIMIT 1";
     $result = mysqli_query($dbc, $query)
             or die("Could not check product activation");
-    
+
     if(mysqli_num_rows($result) == 0)
     {
-        //do nothing. 
+        //do nothing.
         // it mean a key has not yet been inserted.
     }
     else
@@ -87,7 +87,7 @@ function update_licence_key()
             $key_id = $row['id'];
             $key_end_date_time = $row['end_date_time'];
         }
-        
+
         //calculate the number of days left.
         $now = date('m/d/Y H:i:s');
 
@@ -97,7 +97,7 @@ function update_licence_key()
 
 
         $diff =  $end_date_time_string - $now_string;
-        
+
         if($diff <= 0)
         {
             //it means the key has expired.
@@ -129,7 +129,7 @@ if(isset($_GET['start_trial']))
     //then start the one month free trial.
     $query = "SELECT * FROM `trial`";
     $result  = mysqli_query($dbc, $query);
-    
+
     if(mysqli_num_rows($result) > 0)
     {
         //then  the trial period had been initiated.
@@ -140,23 +140,23 @@ if(isset($_GET['start_trial']))
         //its the first time the trial is ran. so start the one month free trail.
         $start_date = date('d/m/Y');
         $s_date = get_date($start_date);
-        
+
         $interval = 30 * 24 * 60 * 60;
-        
+
         $start_string = strtotime($s_date);
-        
+
         $end_string = $start_string + $interval;
-        
+
         $end_date = date("d/m/Y", $end_string);
-        
-        
+
+
         //process the ending time.
         $s_date_time = date("Y-m-d H:i:s");
-        
+
         $e_dat_time = strtotime($s_date_time) + $interval;
-        
+
         $e_date_time = date("m/d/Y H:i:s", $e_dat_time);
-        
+
         //now insert intot the database
         $query = "INSERT INTO `trial` (`start_date`, `start_date_time`, "
                 . " `end_date`, `end_date_time`, "
@@ -167,16 +167,16 @@ if(isset($_GET['start_trial']))
                 . " '1', '0' ) ";
         $result = mysqli_query($dbc, $query)
                 or die("Could not start your trial");
-        
+
         //now update the system. Set first run to be false
         $query = "UPDATE `first_run` SET `first_run` = '0'";
         $result = mysqli_query($dbc, $query);
-        
+
         $success = " You have Started Your One month Free Trial. "
                 . ""
                 . " It will expire on <strong>" . $end_date . " </strong> at "
                 . " <strong> " . time_from_timestamp($e_date_time) . " </strong> ";
-        
+
     }
 }
 
@@ -187,21 +187,21 @@ $result = mysqli_query($dbc, $query)
 
 list($first_run) = mysqli_fetch_array($result);
 
-//if the first run is true. then we have the option of either 
+//if the first run is true. then we have the option of either
 // activating or trying it out.
 
 if($first_run == TRUE)
 {
     $show_activation = TRUE;
-    
+
 }
 else
 {
     //check avtivation.
-    
+
     $query = "SELECT * FROM `trial` LIMIT 1";
     $result = mysqli_query($dbc, $query);
-    
+
     if(mysqli_num_rows($result) == 1)
     {
         //then check for values inside.
@@ -214,7 +214,7 @@ else
             $end_date_time = $row['end_date_time'];
             $product_activated = $row['product_activated'];
         }
-        
+
         //first check if the product has been activated.
         if($product_activated == TRUE)
         {
@@ -223,7 +223,7 @@ else
                     . "     ORDER BY `id` DESC  LIMIT 1";
             $result = mysqli_query($dbc, $query)
                     or die("Could not check product activation");
-            
+
             //if the number of rows is 1. else the key is not activated.
             if(mysqli_num_rows($result) == 1)
             {
@@ -234,7 +234,7 @@ else
                     $key_expired_date = $row['end_date'];
                     $key_expired_time = $row['end_time'];
                 }
-                
+
                 //if the product has expired. then prompt for another key
                 if($activation_expired == TRUE)
                 {
@@ -276,7 +276,7 @@ else
                 $left = 30 - $no_days;
             }
         }
-        
+
     }
     else
     {
@@ -314,8 +314,8 @@ else
             $show_activation = TRUE;
         }
     }
-    
-    
+
+
 }
 
 
@@ -336,7 +336,7 @@ if(!isset($_SESSION['user_id']))
         <meta name="viewport" content="width=device-width, initial-scale=0.1">
         <meta name="author" content="Smart Retail">
         <title>Smart Retail</title>
-        <link rel="shortcut icon" href="images/smart_ico.ico">
+        <link rel="shortcut icon" href="images/Smartretailx300.png">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css">
@@ -446,11 +446,11 @@ if(!isset($_SESSION['user_id']))
                     <ul>
                         <li class="side-li ">
                             <a href="home.php"><i class="fa fa-home text-gray" aria-hidden="true"> </i> <span class="showText">Home</span></a></li>
-                        
-                        <li> 
-                            <a href="#" data-toggle="collapse" data-target="#products" class="collapsed" > 
-                                <i class="fa fa-dollar text-danger"></i> <span class="nav-label">Sell</span> 
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#products" class="collapsed" >
+                                <i class="fa fa-dollar text-danger"></i> <span class="nav-label">Sell</span>
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
                             <ul class="sub-menu collapse" id="products">
 
@@ -473,16 +473,16 @@ if(!isset($_SESSION['user_id']))
 
                             </ul>
                       </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#inventory" class="collapsed active">
                                 <i class="fa fa-gift text-aqua" aria-hidden="true"></i>
                                 <span class="showText"> Inventory</span>
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="inventory">
-                          
+
                                 <li><a href="new_product.php">New Product</a></li>
                                 <li><a href="product_list.php">Product List</a></li>
                                 <li><a href="stock_update.php">Add Stock</a></li>
@@ -502,31 +502,31 @@ if(!isset($_SESSION['user_id']))
                                 </ul>
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#customer" class="collapsed active">
                                 <i class="fa fa-user text-lime" aria-hidden="true"></i>
                                 <span class="showText"> Customers</span>
-                                <span class="fa fa-caret-down pull-right "></span> 
+                                <span class="fa fa-caret-down pull-right "></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="customer">
-                          
+
                                 <li><a href="setup_customer.php">Set Up Customer</a></li>
                                 <li><a href="customer_list.php">Customer List</a></li>
                                 <li><a href="customer_transaction_report.php">Customer Transaction Report</a></li>
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#reports" class="collapsed active">
                                 <i class="fa fa-files-o text-orange" aria-hidden="true"></i>
                                 <span class="showText"> Reports</span>
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="reports">
-                          
+
                                 <li><a href="purchase_history.php">Purchase History</a></li>
                                 <li><a href="available_stock.php">Available Stock</a></li>
                                 <li><a href="returned_products.php">Returned Items Reports</a></li>
@@ -538,7 +538,7 @@ if(!isset($_SESSION['user_id']))
                                     </a>
                                 </li>
                                 <ul class="sub-menu collapse second" id="more_reports">
-                                    
+
                                     <li><a href="inventory_expiry.php">Product Expiry</a></li>
                                     <li><a href="available_stock.php">Available Stock</a></li>
 									<li><a href="group_movement.php">Inventory Movement</a></li>
@@ -547,39 +547,39 @@ if(!isset($_SESSION['user_id']))
                                 </ul>
                             </ul>
                         </li>
-                        
-                        
+
+
                         <li class="side-li active_sidebar">
                             <a href="#" data-toggle="collapse" data-target="#settings" class="collapsed active">
                                 <i class="fa fa-gear text-red" aria-hidden="true"></i>
                                 <span class="showText"> Settings</span>
-                                <span class="fa fa-caret-down pull-right "></span> 
+                                <span class="fa fa-caret-down pull-right "></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="settings">
-                          
+
                                 <li><a href="setup_company.php">Setup Company</a></li>
                                 <li><a href="setup_agent.php">Setup Agent</a></li>
                                 <li><a href="setup_user.php">Setup User</a></li>
                                 <li><a href="categories.php">Setup Product Categories</a></li>
                                 <li><a href="product_units.php">Setup Product Units</a></li>
-                                
+
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="activation.php">
                                 <i class="fa fa-key text-aqua" aria-hidden="true"> </i>
                                 <span class="showText">Activation</span>
                             </a>
                         </li>
-                        
+
                         <li class="side-li lastt ">
                             <a href="#" id="about_btn"><i class="fa fa-question-circle text-primary" aria-hidden="true"></i>
                                 <span class="showText"> About</span>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -589,13 +589,13 @@ if(!isset($_SESSION['user_id']))
             <h2 class="page-header">
                 Welcome to Smart Retail
             </h2>
-            
+
             <!--row for activation-->
             <?php
-            
+
             //requrie the notification bar
             require_once './includes/notifications.php';
-            
+
             if(isset($show_activation) && $show_activation == TRUE)
             {
                 ?>
@@ -619,7 +619,7 @@ if(!isset($_SESSION['user_id']))
                                     Start Free Trial
                                 </a>
                             </span>
-                            
+
                             <span class="pull-right">
                                 <a href="activation.php" class="btn btn-success">
                                     Enter Product Code
@@ -633,8 +633,8 @@ if(!isset($_SESSION['user_id']))
             </div>
                 <?php
             }
-            
-            
+
+
             if(isset($licence_expired) && $licence_expired == TRUE)
             {
                 ?>
@@ -655,17 +655,17 @@ if(!isset($_SESSION['user_id']))
                             <div class="row">
                                 <div class="col-md-12">
                                     Thanks for using smart Retail. We are Sorry your Licence has Expired.
-                                    It Expired on <strong><?= $key_expired_date; ?> </strong> 
-                                    at 
+                                    It Expired on <strong><?= $key_expired_date; ?> </strong>
+                                    at
 
                                     <strong> <?= $key_expired_time; ?> </strong>
                                     <br>
                                     Enter a Licence Key to continue Using the Product.
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                             <div class="row">
                                 <span class="pull-right">
                                     <a href="activation.php" class="btn btn-success">
@@ -681,8 +681,8 @@ if(!isset($_SESSION['user_id']))
             </div>
                 <?php
             }
-            
-            
+
+
             if(isset($trial_expired) && $trial_expired == TRUE)
             {
                 ?>
@@ -703,17 +703,17 @@ if(!isset($_SESSION['user_id']))
                             <div class="row">
                                 <div class="col-md-12">
                                     Thanks for trying smart Retail. Your trial Period is over
-                                    It ended on  <strong><?= $end_date; ?> </strong> 
-                                    at 
+                                    It ended on  <strong><?= $end_date; ?> </strong>
+                                    at
 
                                     <strong> <?= time_from_timestamp($end_date_time); ?> </strong>
                                     <br>
                                     Enter a Licence Key to continue Using the Product.
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                             <div class="row">
                                 <span class="pull-right">
                                     <a href="activation.php" class="btn btn-success">
@@ -730,9 +730,9 @@ if(!isset($_SESSION['user_id']))
                 <?php
             }
             ?>
-            
+
             <!--row for trial period.-->
-            
+
             <?php
             if(isset($trial))
             {
@@ -740,35 +740,35 @@ if(!isset($_SESSION['user_id']))
             <div class="row">
                 <div class="marquee">
                     <marquee>
-                        <<<<< 
-                        <span class=" text-bold"> Thank You for using Smart Retail. </span> 
+                        <<<<<
+                        <span class=" text-bold"> Thank You for using Smart Retail. </span>
                         ..... This is a trial version of the software.
                          You have <strong>30 days</strong> to try it out.
                          ......
-                         
+
                          <span class="text-danger">
-                            Your trial will expire on 
-                            <strong> <?= $trial_end_date; ?> </strong> 
-                            at 
-                            
+                            Your trial will expire on
+                            <strong> <?= $trial_end_date; ?> </strong>
+                            at
+
                             <strong> <?= $trial_end_time; ?> </strong> ......
                          </span>
-                         
-                         You have tried the software for 
+
+                         You have tried the software for
                          <strong> <?= $no_days; ?> days</strong>
-                         
-                         ...   You are left with 
+
+                         ...   You are left with
                          <strong> <?= $left; ?> days </strong>
-                         
+
                          >>>>>>
-                         
+
                     </marquee>
                 </div>
             </div>
                 <?php
             }
             ?>
-            
+
 
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
@@ -786,12 +786,12 @@ if(!isset($_SESSION['user_id']))
                                         . "ORDER BY `id` ";
                                 $result = mysqli_query($dbc, $query)
                                         or die("Error");
-                                
+
                                 while($row = mysqli_fetch_array($result))
                                 {
                                     $today_total += $row['total'];
                                 }
-                                
+
                                 echo number_format($today_total);
                                 ?>
                                 <small> FCFA</small></span>
@@ -815,12 +815,12 @@ if(!isset($_SESSION['user_id']))
                                         . "ORDER BY `id` ";
                                 $result = mysqli_query($dbc, $query)
                                         or die("Error");
-                                
+
                                 while($row = mysqli_fetch_array($result))
                                 {
                                     $today_total += $row['total'];
                                 }
-                                
+
                                 echo number_format($today_total);
                                 ?>
                                 <small> FCFA</small>
@@ -847,10 +847,10 @@ if(!isset($_SESSION['user_id']))
                                 $query = "SELECT * FROM `products` ";
                                 $result = mysqli_query($dbc, $query)
                                         or die("Error");
-                                
-                                
+
+
                                 echo $num = mysqli_num_rows($result);
-                                
+
                                 ?>
                                 <small>ITEMS</small>
                             </span>
@@ -881,7 +881,7 @@ if(!isset($_SESSION['user_id']))
                                 ?>
                                 <small>ITEMS</small>
                             </span>
-                            
+
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -890,7 +890,7 @@ if(!isset($_SESSION['user_id']))
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-            
+
             <div class="row">
                 <div class="col-md-3">
                     <a class="btn btn-lg btn-info btn-flat btn-block" href="sell_products.php">
@@ -931,7 +931,7 @@ if(!isset($_SESSION['user_id']))
                                     <th>
                                         Month
                                     </th>
-                                    
+
                                     <th>
                                         Amount Sold
                                     </th>
@@ -940,9 +940,9 @@ if(!isset($_SESSION['user_id']))
                                 $final_total = 0;
                                 for($i = 1; $i <= 12; $i++)
                                 {
-                                    //selec 
+                                    //selec
                                     $month_total = 0;
-                                    
+
                                     //get the sales summary for that month
                                     $query = "SELECT * FROM `sales` WHERE `month` = '$i'"
                                             . " AND  `year` = '$year';";
@@ -952,8 +952,8 @@ if(!isset($_SESSION['user_id']))
                                     {
                                         $month_total += $row['total'];
                                     }
-                                    
-                                    
+
+
                                     //now add final total
                                     $final_total += $month_total;
                                     ?>
@@ -966,7 +966,7 @@ if(!isset($_SESSION['user_id']))
                                     </td>
                                 </tr>
                                 <?php
-                                            
+
                                 }
                                 ?>
                                 <tr>
@@ -981,7 +981,7 @@ if(!isset($_SESSION['user_id']))
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="box box-warning">
                         <div class="box-header">
@@ -995,15 +995,15 @@ if(!isset($_SESSION['user_id']))
                                     <th>
                                         Month
                                     </th>
-                                    
+
                                     <th>
                                         Amount Sold
                                     </th>
-                                    
+
                                     <th>
                                         Cost
                                     </th>
-                                    
+
                                     <th>
                                         Profit
                                     </th>
@@ -1012,14 +1012,14 @@ if(!isset($_SESSION['user_id']))
                                 $final_total = 0;
                                 $final_cost = 0;
                                 $final_profit = 0;
-                                
+
                                 for($i = 1; $i <= 12; $i++)
                                 {
-                                    //selec 
+                                    //selec
                                     $month_total = 0;
                                     $month_cost = 0;
                                     $month_profit = 0;
-                                    
+
                                     //get the sales summary for that month
                                     $query = "SELECT * FROM `sales` WHERE `month` = '$i'"
                                             . " AND  `year` = '$year';";
@@ -1030,24 +1030,24 @@ if(!isset($_SESSION['user_id']))
                                         $product_code = $row['product_code'];
                                         $quantity = $row['quantity'];
                                         $sale_total = $row['total'];
-                                        
+
                                         $month_total += $row['total'];
-                                        
+
                                         //we need to get the cost of the items.
                                         $query = "SELECT `cost` FROM `products` WHERE `product_code` = '$product_code'";
                                         $res = mysqli_query($dbc, $query);
-                                        
+
                                         list($cost) = mysqli_fetch_array($res);
-                                        
+
                                         $total_cost = $quantity * $cost;
-                                        
+
                                         $profit = $sale_total - $total_cost;
-                                        
+
                                         $month_cost += $total_cost;
                                         $month_profit += $profit;
                                     }
-                                    
-                                    
+
+
                                     //now add final total
                                     $final_total += $month_total;
                                     $final_cost += $month_cost;
@@ -1070,7 +1070,7 @@ if(!isset($_SESSION['user_id']))
                                     </td>
                                 </tr>
                                 <?php
-                                            
+
                                 }
                                 ?>
                                 <tr>
@@ -1092,7 +1092,7 @@ if(!isset($_SESSION['user_id']))
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-md-8">
                     <!-- TABLE: LATEST ORDERS -->
@@ -1122,7 +1122,7 @@ if(!isset($_SESSION['user_id']))
                                         <?php
                                         $query = "SELECT * FROM `sales_ref`ORDER BY `id` DESC LIMIT 7";
                                         $result = mysqli_query($dbc, $query);
-                                        
+
                                         while($row = mysqli_fetch_array($result))
                                         {
                                             ?>
@@ -1147,7 +1147,7 @@ if(!isset($_SESSION['user_id']))
                                         <?php
                                         }
                                         ?>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -1162,7 +1162,7 @@ if(!isset($_SESSION['user_id']))
                     </div>
                     <!-- /.box -->
                 </div>
-                
+
                 <div class="col-md-4">
                     <!-- PRODUCT LIST -->
                     <div class="box box-primary">
@@ -1178,7 +1178,7 @@ if(!isset($_SESSION['user_id']))
                         <!-- /.box-header -->
                         <div class="box-body">
                             <ul class="products-list product-list-in-box">
-                                <?php 
+                                <?php
                                 $query = "SELECT * FROM `products` ORDER BY `id` DESC LIMIT 6";
                                 $result = mysqli_query($dbc, $query);
                                 while($row = mysqli_fetch_array($result))
@@ -1186,12 +1186,12 @@ if(!isset($_SESSION['user_id']))
                                 ?>
                                 <li class="item">
                                     <div class="product-img">
-                                        
+
                                     </div>
                                     <div class="product-info">
                                         <a href="#" class="product-title">
                                             <?php echo $row['product_code']; ?>
-                                            
+
                                             <span class="label label-default pull-right">
                                                 <?php echo number_format($row['unit_price']) . ' FCFA'; ?>
                                             </span>
@@ -1205,7 +1205,7 @@ if(!isset($_SESSION['user_id']))
                                 <?php
                                 }
                                 ?>
-                                
+
                             </ul>
                         </div>
                         <!-- /.box-body -->
@@ -1223,7 +1223,7 @@ if(!isset($_SESSION['user_id']))
 
 
         <div id="about">
-            
+
         </div>
 
         <script>
@@ -1257,15 +1257,15 @@ if(!isset($_SESSION['user_id']))
                         }
                     ]
                 });
-                
+
                 $("#about_btn").click(function(){
                     $("#about").dialog("open");
                 });
-                
+
               });
 
         </script>
-       
+
 
     </body>
 </html>

@@ -307,8 +307,8 @@ require_once './includes/heading.php';
                        ?>
                     <tr>
                         <td><input type="text" name="product_code[]" class="form-control product_code" readonly="true"></td>
-                        <td><input type="text" name="product_name[]" class="form-control product_name" ></td>
-                        <td><input type="text" name="quantity[]" class="form-control quantity" ></td>
+                        <td><input type="text" name="product_name[]" class="form-control product_name" autocomplete="off" ></td>
+                        <td><input type="text" name="quantity[]" class="form-control quantity" autocomplete="off" ></td>
                         <td><input type="text" name="unit_price[]" class="form-control unit_price" readonly="true"></td>
                         <td><input type="text" name="total[]" class="form-control total" readonly="true"></td>
                         <td style="background-color: white; border-bottom:  2px solid #ccc;">
@@ -444,43 +444,63 @@ if(isset($print_receipt) && $print_receipt == TRUE)
         });
         
         $(".product_name").focusout(function(){
+            
+            $product_exist = true;
+            
             var product_name = $(this).val();
             var index = $(this).closest("tr").index();
             var $row = $("#tb tr:eq(" + index + ")");
             //now grab the index of that row.
             
-            $.ajax({
-               url: "get_product_code.php",
-               method: "POST",
-               data: {key: product_name},
-               dataType : "text",
-               success: function(data){
-                   $row.find("input[name='product_code[]']").val(data);
+            if(product_name != '')
+            {
+                $.ajax({
+                   url: "get_product_code.php",
+                   method: "POST",
+                   data: {key: product_name},
+                   dataType : "text",
+                   success: function(data){
+                       if(data == '')
+                       {
+                           //then the product does not exist.
+                           $product_exist = false;
+                           $row.find("input[name='product_name[]']").val('');
+                       }
+                       else
+                       {
+                            $row.find("input[name='product_code[]']").val(data);
+                       }
+                   }
+               });
+
+               if($product_exist == true)
+               {
+                    //get the unit price
+                    $.ajax({
+                        url: "get_unit_price.php",
+                        method: "POST",
+                        data: {key: product_name},
+                        dataType : "text",
+                        success: function(data){
+                            $row.find("input[name='unit_price[]']").val(data);
+                        }
+                    });
+
+                    //get the Available stock
+                    $.ajax({
+                        url: "get_quantity.php",
+                        method: "POST",
+                        data: {key: product_name},
+                        dataType : "text",
+                        success: function(data){
+                            $("#stock").val(data);
+                        }
+                    });
+
                }
-           });
-           
-           //get the unit price
-           $.ajax({
-               url: "get_unit_price.php",
-               method: "POST",
-               data: {key: product_name},
-               dataType : "text",
-               success: function(data){
-                   $row.find("input[name='unit_price[]']").val(data);
-               }
-           });
-           
-           //get the Available stock
-           $.ajax({
-               url: "get_quantity.php",
-               method: "POST",
-               data: {key: product_name},
-               dataType : "text",
-               success: function(data){
-                   $("#stock").val(data);
-               }
-           });
-        }); //end of focus out for the product name
+           }//end of if the product name is empty.
+            }); //end of focus out for the product name
+            
         
         $(".quantity").focusout(function(){
             var quantity = $(this).val();

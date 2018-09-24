@@ -10,4 +10,6 @@ $day = DAY;
 $month = MONTH;
 $year = YEAR;
 
+$date = date("d/m/Y");
+
 $user_id = get_user_id();
