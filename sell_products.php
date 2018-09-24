@@ -503,17 +503,29 @@ if(isset($print_receipt) && $print_receipt == TRUE)
 
         $(".quantity").focusout(function(){
             var quantity = $(this).val();
+            var left = $("#stock").val();
+
             var index = $(this).closest("tr").index();
             var $row = $("#tb tr:eq(" + index + ")");
 
-            //get the unit price
-            var unit_price = $row.find("input[name='unit_price[]']").val();
+            //if the quantity enter is greater than availabel. then alert
+            if(+quantity > +left)
+            {
+                alert("The quantity Entered is greater than the stock available");
+                $(this).val('');
+                $(this).attr('autofocus', 'true');
+            }
+            else {
+                //get the unit price
+                var unit_price = $row.find("input[name='unit_price[]']").val();
 
-            var total  = unit_price * quantity;
+                var total  = unit_price * quantity;
 
-            $row.find("input[name='total[]']").val(total);
+                $row.find("input[name='total[]']").val(total);
 
-            update_final_total();
+                update_final_total();
+            }
+
         });
 
         function update_final_total()
