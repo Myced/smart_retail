@@ -13,13 +13,13 @@ $dbc = $db->connect();
 function gen_return_ref()
 {
     global $dbc;
-    
+
     $query = "SELECT `id` FROM `products` ORDER BY `id` DESC LIMIT 1";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
-    $constant = 'ITM';
-    
+
+    $constant = 'ITM-';
+
     if(mysqli_num_rows($result)== 0)
     {
         $value = '00001';
@@ -28,11 +28,11 @@ function gen_return_ref()
     {
         //grab the value of the id
         list($last_idd) = mysqli_fetch_array($result);
-        
+
         $last_id = (int) $last_idd;
-        
+
         $last_id++;
-        
+
         if($last_id < 10)
         {
             $value = '0000' . $last_id;
@@ -54,20 +54,20 @@ function gen_return_ref()
             $value = $last_id;
         }
     }
-    
+
     return $constant . $value;
 }
 
 function gen_product_ref()
 {
     global $dbc;
-    
+
     $query = "SELECT `id` FROM `products` ORDER BY `id` DESC LIMIT 1";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
+
     $constant = 'REF';
-    
+
     if(mysqli_num_rows($result)== 0)
     {
         $value = '00001';
@@ -76,11 +76,11 @@ function gen_product_ref()
     {
         //grab the value of the id
         list($last_idd) = mysqli_fetch_array($result);
-        
+
         $last_id = (int) $last_idd;
-        
+
         $last_id++;
-        
+
         if($last_id < 10)
         {
             $value = '0000' . $last_id;
@@ -102,7 +102,7 @@ function gen_product_ref()
             $value = $last_id;
         }
     }
-    
+
     return $constant . $value;
 }
 
@@ -113,84 +113,83 @@ if(isset($_POST['submit']))
     $ref = filter($_POST['ref']);
     $product_code = filter($_POST['product_code']);
     $date = filter($_POST['date']);
-    
+
     $barcode = filter($_POST['barcode']);
-    
+
     $product_name = filter($_POST['product_name']);
-    
     $quantity = filter($_POST['quantity']);
     $unit =  filter($_POST['unit']);
     $category = filter($_POST['category']);
-    
+
     $cost = filter(get_money($_POST['cost']));
     $unit_price = filter(get_money($_POST['unit_price']));
-    
+
     //suplier information
     $suplier = filter($_POST['suplier']);
     $sup_location = filter($_POST['location']);
     $sup_contact = filter($_POST['contact']);
-    
+
     $product_status = filter($_POST['product_status']);
     $reorder_level = filter($_POST['reorder']);
-    
+
     if(isset($_POST['show_stock']))
     {
-        $show_stock = filter($_POST['show_stock']);
+        $show_stock = TRUE;
     }
     else
     {
         $show_stock = FALSE;
     }
-    
+
     $expiry_date = filter($_POST['expiry_date']);
-    
+
     $valuation = filter($_POST['valuation']);
-    
+
     if(empty($product_name))
     {
         $error = "Sorry. You must Provide a product name";
     }
-    
+
     if(empty($product_code))
     {
         $error = "Please a product code is needed";
     }
-    
+
     if(!isset($quantity))
     {
         $error = "Sorry. We need an initial Quantity";
     }
-    
+
     //chceck that the product code is not already used
     $query = "SELECT * FROM `products` WHERE `ref` = '$ref'";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
+
     if(mysqli_num_rows($result) > 0)
     {
         $error = "Sorry. This Ref is already used. Please take another one.";
     }
-    
+
     $query = "SELECT * FROM `products` WHERE `product_code` = '$product_code'";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
+
     if(mysqli_num_rows($result) > 0)
     {
         $error = "Sorry. This Product Code is already used. Please use  another one.";
     }
-    
+
     $query = "SELECT * FROM `products` WHERE `product_name` = '$product_name'";
     $result = mysqli_query($dbc, $query)
             or die("Error");
-    
+
     if(mysqli_num_rows($result) > 0)
     {
         $error = "Sorry. This Product name is already used. Please use  another one in other "
                 . " to avoid confusion.";
     }
-    
-    
+
+
     //if an error is not set. then insert everthing into the database
     if(!isset($error))
     {
@@ -208,13 +207,13 @@ if(isset($_POST['submit']))
                 . " '$suplier', '$sup_location', '$sup_contact', '$product_status', "
                 . " '$show_stock', '$expiry_date', '$valuation', '$day', '$month',"
                 . " '$year', NOW(), NOW(), '$user_id')";
-        
+
         $result = mysqli_query($dbc, $query)
                 or die("Error");
-        
+
         $success = "Item Added to Inventory";
     }
-            
+
 }
 
 /**
@@ -252,17 +251,17 @@ require_once './includes/heading.php';
                                required="true" readonly="true" value="<?php echo $new_ref; ?>">
                     </div>
                 </div>
-                
+
                 <div class="col-md-4 col-md-offset-1">
                     <div class="form-group">
                         <label for="name" >Date</label>
                         <input type="text" class="form-control datepicker" name="date"
                                value="<?php echo date("d/m/Y"); ?>">
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-9 col-md-offset-3">
                 <div class="col-md-4">
@@ -278,10 +277,10 @@ require_once './includes/heading.php';
                         <label for="name" >Barcode</label>
                         <input type="text" class="form-control"  name="barcode">
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group" >
@@ -291,16 +290,16 @@ require_once './includes/heading.php';
                            required="true">
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
 
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
-                
+
             </div>
-            
+
             <div class="col-md-8">
                 <table style="width: 102%; ">
                     <tr>
@@ -381,7 +380,7 @@ require_once './includes/heading.php';
             </div>
         </div>
     </div>
-    
+
     <br><br>
     <div class="row">
         <div class="col-md-12">
@@ -397,7 +396,7 @@ require_once './includes/heading.php';
     <br>
     <div class="row">
         <div class="col-md-2">
-            
+
         </div>
         <div class="col-md-3">
             <div class="form-inline">
@@ -417,7 +416,7 @@ require_once './includes/heading.php';
             </div>
         </div>
     </div>
-    
+
     <br><br>
     <div class="row">
         <div class="col-md-12">
@@ -428,42 +427,42 @@ require_once './includes/heading.php';
                     </strong>
                 </h3>
             </div>
-            
+
             <div class="col-md-2">
-                
+
             </div>
-            
+
                 <div class="col-md-4">
-                    
+
                     <div class="">
                         <div class="col-md-4">
                             <div class="radio">
-                                
+
                                 <label>
                                     <input type="radio" name="product_status" value="1" checked="true">
                                     Active
                                 </label>
-                                
+
                             </div>
                             <div class="radio">
-                                
+
                                 <label>
                                     <input type="radio" name="product_status" value="0">
                                     Not Active
                                 </label>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="form-inline">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="checkbox">
-                                        
+
                                         <label>
                                             <input type="checkbox" name="show_stock" value="1" checked="true">
                                             Show Stock Available
@@ -481,9 +480,9 @@ require_once './includes/heading.php';
     <br><br>
     <div class="row">
         <div class="col-md-2">
-            
+
         </div>
-        
+
         <div class="col-md-4" >
             <div class="form-inline">
                 <div class="form-group">

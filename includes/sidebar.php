@@ -1,15 +1,15 @@
-<!--sidebar--> 
+<!--sidebar-->
         <div class="container-fluid">
             <div class="side-navbar showHalfMenu showFullMenu" id="sideNav">
                 <div class="side-nave-iner">
                     <ul>
                         <li class="side-li ">
                             <a href="home.php"><i class="fa fa-home text-gray" aria-hidden="true"> </i> <span class="showText">Home</span></a></li>
-                        
-                        <li> 
-                            <a href="#" data-toggle="collapse" data-target="#products" class="collapsed" > 
-                                <i class="fa fa-dollar text-danger"></i> <span class="nav-label">Sell</span> 
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#products" class="collapsed" >
+                                <i class="fa fa-dollar text-danger"></i> <span class="nav-label">Sell</span>
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
                             <ul class="sub-menu collapse" id="products">
 
@@ -32,17 +32,18 @@
 
                             </ul>
                       </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#inventory" class="collapsed active">
                                 <i class="fa fa-gift text-aqua" aria-hidden="true"></i>
                                 <span class="showText"> Inventory</span>
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="inventory">
-                          
+
                                 <li><a href="new_product.php">New Product</a></li>
+                                <li><a href="upload_products.php">Upload Products</a></li>
                                 <li><a href="product_list.php">Product List</a></li>
                                 <li><a href="stock_update.php">Add Stock</a></li>
                                 <li><a href="issue_inventory.php">Issue Inventory</a></li>
@@ -61,31 +62,31 @@
                                 </ul>
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#customer" class="collapsed active">
                                 <i class="fa fa-user text-lime" aria-hidden="true"></i>
                                 <span class="showText"> Customers</span>
-                                <span class="fa fa-caret-down pull-right "></span> 
+                                <span class="fa fa-caret-down pull-right "></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="customer">
-                          
+
                                 <li><a href="setup_customer.php">Set Up Customer</a></li>
                                 <li><a href="customer_list.php">Customer List</a></li>
                                 <li><a href="customer_transaction_report.php">Customer Transaction Report</a></li>
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="#" data-toggle="collapse" data-target="#reports" class="collapsed active">
                                 <i class="fa fa-files-o text-orange" aria-hidden="true"></i>
                                 <span class="showText"> Reports</span>
-                                <span class="fa fa-caret-down pull-right fa-lg"></span> 
+                                <span class="fa fa-caret-down pull-right fa-lg"></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="reports">
-                          
+
                                 <li><a href="purchase_history.php">Purchase History</a></li>
                                 <li><a href="available_stock.php">Available Stock</a></li>
                                 <li><a href="returned_products.php">Returned Items Reports</a></li>
@@ -97,7 +98,7 @@
                                     </a>
                                 </li>
                                 <ul class="sub-menu collapse second" id="more_reports">
-                                    
+
                                     <li><a href="inventory_expiry.php">Product Expiry</a></li>
                                     <li><a href="available_stock.php">Available Stock</a></li>
 									<li><a href="group_movement.php">Inventory Movement</a></li>
@@ -106,40 +107,40 @@
                                 </ul>
                             </ul>
                         </li>
-                        
-                        
+
+
                         <li class="side-li active_sidebar">
                             <a href="#" data-toggle="collapse" data-target="#settings" class="collapsed active">
                                 <i class="fa fa-gear text-red" aria-hidden="true"></i>
                                 <span class="showText"> Settings</span>
-                                <span class="fa fa-caret-down pull-right "></span> 
+                                <span class="fa fa-caret-down pull-right "></span>
                             </a>
-                            
+
                             <ul class="sub-menu collapse" id="settings">
-                          
+
                                 <li><a href="setup_company.php">Setup Company</a></li>
                                 <li><a href="setup_agent.php">Setup Agent</a></li>
                                 <li><a href="setup_user.php">Setup User</a></li>
                                 <li><a href="categories.php">Setup Product Categories</a></li>
                                 <li><a href="product_units.php">Setup Product Units</a></li>
-                                
+
                             </ul>
                         </li>
-                        
+
                         <li class="side-li">
                             <a href="activation.php">
                                 <i class="fa fa-key text-aqua" aria-hidden="true"> </i>
                                 <span class="showText">Activation</span>
                             </a>
                         </li>
-                        
+
                         <li class="side-li lastt ">
                             <a href="#" id="about_btn"><i class="fa fa-question-circle text-primary" aria-hidden="true"></i>
                                 <span class="showText"> About</span>
                             </a>
                         </li>
-                        
-                        
+
+
                     </ul>
                 </div>
             </div>

@@ -48,7 +48,7 @@ if(mysqli_num_rows($result) == 0)
 else
 {
     while($row = mysqli_fetch_array($result))
-    {   
+    {
         $output .= "<tr class='white_background'>"
                 . "     <td>" . $count++ . "</td>"
                 . "     <td>" . $row['product_code'] . "</td>"
@@ -61,6 +61,11 @@ else
                             <a href='edit_product.php?item=" . $row['product_code'] . "'
                                 class='btn btn-primary btn-xs' title='Edit this product'>
                                 <i class='fa fa-pencil'></i>
+                            </a>
+
+                            <a data-id3='" . $row['id'] . "' href='#'
+                                class='btn btn-danger btn-xs delete' title='Delete this product'>
+                                <i class='fa fa-trash'></i>
                             </a>
                     </td>"
                 . "</tr>";

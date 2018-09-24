@@ -587,6 +587,11 @@ form:after {
     color: #fff;
 }
 
+.padding-special
+{
+    padding: 10px;
+}
+
 .licence
 {
     font-weight: bold;

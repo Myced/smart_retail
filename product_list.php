@@ -5,16 +5,34 @@ require_once './includes/functions.php';
 $db = new dbc();
 $dbc = $db->connect();
 
+//delete an account;
+if(isset($_GET['idd']))
+{
+    $idd = filter($_GET['idd']);
+
+    $action = filter($_GET['action']);
+
+    if($action  == 'del')
+    {
+        //delete the item.
+        $query = "DELETE FROM `products` WHERE `id` = '$idd'";
+        $result = mysqli_query($dbc, $query)
+            or die("Cannot Delete");
+
+        $success = "Product  Deleted";
+    }
+}
+
 //do page transactions here
 //query initialisation
-$results_per_page = 20; //number of results to show on a sigle page
+$results_per_page = 40; //number of results to show on a sigle page
 
 //data manipulation
 if(isset($_GET['page']))
 {
     //get the page number
     $page_number = filter($_GET['page']);
-    
+
     //Variable to maintain countring
     $inter  = $page_number - 1; //reduces the page numer in order to count
     $count = (int) ($inter * $results_per_page) + 1;
@@ -22,12 +40,12 @@ if(isset($_GET['page']))
 else
 {
     $page_number = 1;
-    
+
     //Variable to do countring
     $count = 1;
 }
 
-//START OF search results 
+//START OF search results
 if($page_number < 2)
 {
     $start = 0;
@@ -44,9 +62,9 @@ $total = mysqli_num_rows($result);
 
 if($results_per_page >= 1)
 {
-    
+
    $number_of_pages = ceil($total/$results_per_page);
-   
+
    if($number_of_pages < 1)
    {
        $page_count = 1;
@@ -55,17 +73,17 @@ if($results_per_page >= 1)
    {
        $page_count = $number_of_pages;
    }
-    
-} 
+
+}
 else
 {
     $error = "Results Per page Cannot be zero or Less";
     $page_count = 1;
 }
-//end 
+//end
 $end = $results_per_page;
 
-//now if page number is greater that 
+//now if page number is greater that
 if($page_number > $page_count)
 {
     $error = "That Page does not Exist";
@@ -95,7 +113,7 @@ require_once './includes/heading.php';
 
 <br>
 <div class="row">
-    
+
     <br>
     <div class="row">
         <div class="text-center col-md-12">
@@ -108,16 +126,16 @@ require_once './includes/heading.php';
           <div class="col-md-5">
               <input type="search" class="form-control" name="search" placeholder="Search Here" id="search">
           </div>
-          
+
           <div class="col-md-1">
-              
+
           </div>
-          
+
           <div class="col-md-6">
-              
+
           </div>
       </div>
-      
+
       <br>
       <div class="row">
           <div class="col-md-12">
@@ -186,10 +204,13 @@ require_once './includes/heading.php';
                                 <td>
                                     <?php echo number_format($row['unit_price']); ?>
                                 </td>
-                                
+
                                 <td>
                                     <a href="edit_product.php?item=<?= $row['product_code']; ?>" class="btn btn-primary btn-xs" title="Edit this Product">
                                         <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-xs btn-danger delete" href="#" title="Delete" data-id3="<?php echo $row['id']; ?>">
+                                        <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
 
@@ -206,16 +227,16 @@ require_once './includes/heading.php';
                       Page <?php echo $page_number; ?>/<?php echo $page_count; ?>
                   </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <?php 
+                        <?php
                         if($page_count > 1)
                         {
                             ?>
                         <ul class="pagination">
-                            <?php 
+                            <?php
                             if($page_number != 1)
                             {
                                 ?>
@@ -225,7 +246,7 @@ require_once './includes/heading.php';
                                 <?php
                             }
                             ?>
-                            <?php 
+                            <?php
                             for($i = 1; $i <= $page_count; $i++)
                             {
                                 ?>
@@ -237,7 +258,7 @@ require_once './includes/heading.php';
                                 <?php
                             }
                             ?>
-                            
+
                             <?php
                             //If the pages and page number are not the same then show the next button
                             if($page_number != $page_count)
@@ -249,7 +270,7 @@ require_once './includes/heading.php';
                                 <?php
                             }
                             ?>
-                            
+
                         </ul>
                             <?php
                         }
@@ -260,14 +281,14 @@ require_once './includes/heading.php';
           </div>
       </div>
   </section>
-  
+
   <br><br>
-  
+
   <div class="row">
       <div class="col-md-12">
           <div class="col-md-8">
-              
-              
+
+
           </div>
           <div class="col-md-4">
               <a href="#" class="btn btn-success"
@@ -276,7 +297,7 @@ require_once './includes/heading.php';
                   <i class="fa fa-print"></i>
                   Print
               </a>
-              
+
               <a href="home.php" class="btn btn-success">
                   <i class="fa fa-close"></i>
                   Close
@@ -287,15 +308,26 @@ require_once './includes/heading.php';
 </div>
 
 <script>
+
+    $(document).on('click', '.delete', function(){
+        var id = $(this).data("id3");
+
+        if(confirm("Are you sure you want to delete this Product ?"))
+        {
+            //redirect to the editing page
+            window.location.href="product_list.php?action=del&idd="+id;
+        }
+    });
+
    $(document).ready(function(){
        //variables to keep track of events
        $search  = $("#search");
        $table_area = $("#table_area");
-       
+
        $search.keyup(function(){
            var key = $search.val();
-           
-           
+
+
            //now search the results from the database
            $.ajax({
                url: "api/search_product.php",
@@ -305,18 +337,18 @@ require_once './includes/heading.php';
                success: function(data){
                    showResults(data);
                }
-               
+
            });
        });
-       
+
        function showResults(output)
        {
            //show output
            $table_area.html(output);
        }
-       
-       
-   }) 
+
+
+   })
 </script>
 
 <?php
